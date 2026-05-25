@@ -1,0 +1,33 @@
+services:
+  - type: web
+    name: api-relay-pro
+    runtime: node
+    plan: starter
+    buildCommand: ""
+    startCommand: "node server.mjs"
+    healthCheckPath: /healthz
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 8000
+      - key: DATA_DIR
+        value: /var/data
+      - key: APP_SECRET
+        generateValue: true
+      - key: ADMIN_EMAIL
+        sync: false
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: UPSTREAM_BASE_URL
+        value: https://api.openai.com
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: PROMPT_TOKEN_PRICE
+        value: "0.000001"
+      - key: COMPLETION_TOKEN_PRICE
+        value: "0.000003"
+    disk:
+      name: api-relay-data
+      mountPath: /var/data
+      sizeGB: 1
